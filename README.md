@@ -19,11 +19,11 @@ docker-compose up -d
 ```
 - To use the Spark Web UI, go to http://localhost:8080
 
-## Jupiter Notebook
+## Jupyter Notebook
 
-- To use the Jupiter Notebook, go to the logs of the `jupyter-notebook` container and follow the URL with the token.
+- To use the Jupyter Notebook, go to the logs of the `jupyter-notebook` container and follow the URL with the token.
 ```shell
 docker logs jupyter-notebook
 ```
 - There are some example notebooks in the `worspace` directory.
-- It is possible to use `PySpark` in the Jupiter Notebook.
+- It is possible to use `PySpark` in the Jupyter Notebook.
