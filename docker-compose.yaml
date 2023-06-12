@@ -1,0 +1,94 @@
+version: "3.9"
+
+services:
+  namenode:
+    build:
+      context: hadoop
+      target: hadoop-namenode
+    container_name: namenode
+    hostname: namenode
+    volumes:
+      - namenode:/hadoop/hdfs/namenode
+    ports:
+      - "9870:9870"
+      - "9000:9000"
+    networks:
+      - hadoop-hdfs-net
+
+  datanode1:
+    build:
+      context: hadoop
+      target: hadoop-datanode
+    container_name: datanode1
+    hostname: datanode1
+    volumes:
+      - datanode1:/hadoop/hdfs/datanode
+    ports:
+      - "9864:9864"
+      - "9866:9866"
+      - "9867:9867"
+    networks:
+      - hadoop-hdfs-net
+
+  datanode2:
+    build:
+      context: hadoop
+      target: hadoop-datanode
+    container_name: datanode2
+    hostname: datanode2
+    volumes:
+      - datanode2:/hadoop/hdfs/datanode
+    ports:
+      - "9865:9864"
+      - "9868:9866"
+      - "9869:9867"
+    networks:
+      - hadoop-hdfs-net
+
+  spark-master:
+    build:
+      context: spark
+      target: spark-master
+    container_name: spark-master
+    hostname: spark-master
+    ports:
+      - "8080:8080"
+      - "7077:7077"
+      - "6066:6066"
+    networks:
+      - hadoop-hdfs-net
+
+  spark-worker:
+    build:
+      context: spark
+      target: spark-worker
+    container_name: spark-worker
+    hostname: spark-worker
+    ports:
+      - "8081:8081"
+    networks:
+      - hadoop-hdfs-net
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+
+  spark-jupyter:
+    image: jupyter/pyspark-notebook:python-3.10
+    container_name: spark-jupyter
+    hostname: spark-jupyter
+    ports:
+      - "8888:8888"
+    networks:
+      - hadoop-hdfs-net
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+    volumes:
+      - ./workspace:/home/jovyan/work
+
+
+networks:
+  hadoop-hdfs-net:
+
+volumes:
+  namenode:
+  datanode1:
+  datanode2:
