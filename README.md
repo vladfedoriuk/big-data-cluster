@@ -27,3 +27,12 @@ docker logs jupyter-notebook
 ```
 - There are some example notebooks in the `worspace` directory.
 - It is possible to use `PySpark` in the Jupyter Notebook.
+
+## Kafka
+
+- The Kafka broker is available at `localhost:9092`. Docker compose is used to set up the Kafka broker
+and the Zookeeper server with replication factor of 1.
+- To create a topic, run the following command:
+```shell
+make create-test-topic
+```
