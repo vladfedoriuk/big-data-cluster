@@ -1,4 +1,6 @@
-all: build-hadoop-base
+all: build-hadoop-base build-spark-base create-test-topic
+
+build: build-hadoop-base build-spark-base
 
 build-hadoop-base:
 	docker build -t hadoop-base --target hadoop-base hadoop
